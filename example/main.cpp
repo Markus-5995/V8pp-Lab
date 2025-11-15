@@ -1,10 +1,10 @@
-#include "runner/runner.hpp"
+#include <iostream>
+
+#include "v8pp-lab/runner.hpp"
 #include "jsprovider/scripts.hpp"
 #include "jsprovider/filelocator.hpp"
 #include "coffeemodule/coffemodule.hpp"
-#include "runner/../../src/v8ppenvironment.hpp"
-#include <iostream>
-
+#include "v8pp-lab/v8ppenvironment.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -14,6 +14,11 @@ int main(int argc, char* argv[])
     if (argc == 2)
     {
         JSProvider::FileLocator locator (argv[1]);
+        fileBasedScripts = locator.getScripts();
+    }
+    else
+    {
+        JSProvider::FileLocator locator (DEFAULT_JS_DIR);
         fileBasedScripts = locator.getScripts();
     }
 
@@ -28,8 +33,9 @@ int main(int argc, char* argv[])
     };
 
     Runner::Runner<Runner::V8ppEnvironment> runner {};
+    std::cout << "-----Loading Modules-----" << std::endl;
     runner.loadModules(std::move(modules));
 
-    std::cout << "----------------" << std::endl;
+    std::cout << "-----Running Scripts-----" << std::endl;
     return runner.run(std::move(scripts));
 }

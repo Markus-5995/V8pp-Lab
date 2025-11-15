@@ -1,25 +1,34 @@
 cmake_minimum_required(VERSION 3.15)
-project(JSRunner CXX)
+project(V8ppLab CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-add_compile_options("-fconcepts-diagnostics-depth=10")
+
+option(BUILD_EXAMPLE ON)
 
 find_package(v8pp REQUIRED)
 find_package(V8 REQUIRED)
 
 add_subdirectory(appconcepts)
-add_subdirectory(runner)
 add_subdirectory(jsprovider)
-add_subdirectory(cppprovider)
-add_subdirectory(coffeemodule)
 
-add_executable(JSRunner
-    src/main.cpp)
+if(BUILD_EXAMPLE)
+    add_subdirectory(example)
+endif()
 
-target_link_libraries(JSRunner
+
+add_library(V8ppLab SHARED
+    include/v8pp-lab/runner.hpp
+    include/v8pp-lab/v8ppenvironment.hpp
+    src/runner.cpp
+    src/v8ppenvironment.cpp
+)
+
+target_include_directories(V8ppLab
     PUBLIC
-    Runner
-    JSProvider
-    CoffeeModule)
+    include)
+
+target_link_libraries(V8ppLab
+    PUBLIC
+    JSProvider)
 

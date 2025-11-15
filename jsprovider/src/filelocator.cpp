@@ -5,11 +5,13 @@ namespace JSProvider
 {
 
 FileLocator::FileLocator(std::string_view jsDirectory) :
-    m_directoryIt(jsDirectory) {
+    m_directoryIt(jsDirectory)
+{
 
 }
 
-std::vector<FileScript> FileLocator::getScripts() const {
+std::vector<FileScript> FileLocator::getScripts() const
+{
     std::vector<FileScript> vector {};
     auto view = std::ranges::filter_view(m_directoryIt,
                                          [](const std::filesystem::directory_entry& path){

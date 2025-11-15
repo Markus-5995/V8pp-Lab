@@ -5,10 +5,10 @@
 namespace JSProvider
 {
 
-class FileLocator
+class FileLocator final
 {
 public:
-    FileLocator(std::string_view jsDirectory);
+    explicit FileLocator(std::string_view jsDirectory);
     std::vector<FileScript> getScripts() const;
 private:
     std::filesystem::directory_iterator m_directoryIt {};

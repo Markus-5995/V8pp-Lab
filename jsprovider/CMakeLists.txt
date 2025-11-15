@@ -1,7 +1,8 @@
-add_library(JSProvider SHARED
+add_library(JSProvider STATIC
     include/jsprovider/scripts.hpp
     src/scripts.cpp
-    include/jsprovider/filelocator.hpp src/filelocator.cpp)
+    include/jsprovider/filelocator.hpp
+    src/filelocator.cpp)
 
 target_include_directories(JSProvider
     PUBLIC
