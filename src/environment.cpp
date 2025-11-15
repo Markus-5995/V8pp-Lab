@@ -1,9 +1,9 @@
-#include "v8pp-lab/v8ppenvironment.hpp"
+#include "v8pp-lab/environment.hpp"
 #include <v8.h>
 #include <v8pp/context.hpp>
 #include <v8/libplatform/libplatform.h>
 #include <iostream>
-namespace Runner
+namespace V8ppLap
 {
 
 struct Context

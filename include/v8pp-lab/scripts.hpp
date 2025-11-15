@@ -1,9 +1,8 @@
 #pragma once
-#include "appconcepts/script.hpp"
 #include <filesystem>
-#include <fstream>
-#include <sstream>
-namespace JSProvider
+#include "v8pp-lab/concepts.hpp"
+
+namespace V8ppLap
 {
 
 class InMemoryScript
@@ -45,8 +44,6 @@ public:
     std::filesystem::path m_filepath {};
 };
 
-static_assert(AppConcepts::JSScript<InMemoryScript>, "Must confrom to 'JSScript' concept!");
-static_assert(AppConcepts::JSScript<FileScript>, "Must confrom to 'JSScript' concept!");
-
-
-} // namespace JSProvider
+static_assert(JSScript<InMemoryScript>, "Must confrom to 'JSScript' concept!");
+static_assert(JSScript<FileScript>, "Must confrom to 'JSScript' concept!");
+}

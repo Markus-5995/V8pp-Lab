@@ -1,7 +1,8 @@
-#include "jsprovider/filelocator.hpp"
+#include "v8pp-lab/filelocator.hpp"
 #include <ranges>
 #include <algorithm>
-namespace JSProvider
+
+namespace V8ppLap
 {
 
 FileLocator::FileLocator(std::string_view jsDirectory) :
@@ -27,4 +28,4 @@ std::vector<FileScript> FileLocator::getScripts() const
     return vector;
 }
 
-} // namespace JSProvider
+}

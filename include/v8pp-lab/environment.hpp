@@ -1,9 +1,8 @@
 #pragma once
 #include "v8pp/module.hpp"
-#include "appconcepts/cppmodule.hpp"
+#include "v8pp-lab/concepts.hpp"
 
-
-namespace Runner
+namespace V8ppLap
 {
 class Context;
 class V8ppEnvironment
@@ -19,5 +18,5 @@ private:
 };
 
 
-static_assert(AppConcepts::ScriptEnvironment<V8ppEnvironment>, "Must adhere to 'ScriptEnvironment' concept!");
+static_assert(ScriptEnvironment<V8ppEnvironment>, "Must adhere to 'ScriptEnvironment' concept!");
 }

@@ -1,5 +1,5 @@
 #pragma once
-#include "appconcepts/cppmodule.hpp"
+#include "v8pp-lab/concepts.hpp"
 
 namespace CppModule
 {
@@ -18,5 +18,5 @@ public:
     }
 };
 
-static_assert(AppConcepts::CppModule<CoffeeModule>, "Must adhere to CppModule concept!");
+static_assert(V8ppLap::CppModule<CoffeeModule>, "Must adhere to CppModule concept!");
 }

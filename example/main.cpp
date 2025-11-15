@@ -1,28 +1,29 @@
 #include <iostream>
 
 #include "v8pp-lab/runner.hpp"
-#include "jsprovider/scripts.hpp"
-#include "jsprovider/filelocator.hpp"
+#include "v8pp-lab/scripts.hpp"
+#include "v8pp-lab/filelocator.hpp"
 #include "coffeemodule/coffemodule.hpp"
-#include "v8pp-lab/v8ppenvironment.hpp"
+#include "v8pp-lab/environment.hpp"
 
 int main(int argc, char* argv[])
 {
-    constexpr JSProvider::InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
+    using namespace V8ppLap;
+    constexpr InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
 
-    std::vector<JSProvider::FileScript> fileBasedScripts {};
+    std::vector<FileScript> fileBasedScripts {};
     if (argc == 2)
     {
-        JSProvider::FileLocator locator (argv[1]);
+        FileLocator locator (argv[1]);
         fileBasedScripts = locator.getScripts();
     }
     else
     {
-        JSProvider::FileLocator locator (DEFAULT_JS_DIR);
+        FileLocator locator (DEFAULT_JS_DIR);
         fileBasedScripts = locator.getScripts();
     }
 
-    std::tuple<std::vector<JSProvider::InMemoryScript>, std::vector<JSProvider::FileScript>> scripts{
+    std::tuple<std::vector<InMemoryScript>, std::vector<FileScript>> scripts{
         std::vector{ memoryScript },
         fileBasedScripts
     };
@@ -32,7 +33,7 @@ int main(int argc, char* argv[])
         std::vector {coffeeModule}
     };
 
-    Runner::Runner<Runner::V8ppEnvironment> runner {};
+    Runner<V8ppEnvironment> runner {};
     std::cout << "-----Loading Modules-----" << std::endl;
     runner.loadModules(std::move(modules));
 

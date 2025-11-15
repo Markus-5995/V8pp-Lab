@@ -5,7 +5,7 @@ add_library(CoffeeModule SHARED
 
 target_link_libraries(CoffeeModule
     PUBLIC
-    AppConcepts)
+    V8ppLab)
 
 target_include_directories(CoffeeModule
     PUBLIC

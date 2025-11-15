@@ -9,9 +9,6 @@ option(BUILD_EXAMPLE ON)
 find_package(v8pp REQUIRED)
 find_package(V8 REQUIRED)
 
-add_subdirectory(appconcepts)
-add_subdirectory(jsprovider)
-
 if(BUILD_EXAMPLE)
     add_subdirectory(example)
 endif()
@@ -19,9 +16,14 @@ endif()
 
 add_library(V8ppLab SHARED
     include/v8pp-lab/runner.hpp
-    include/v8pp-lab/v8ppenvironment.hpp
-    src/runner.cpp
-    src/v8ppenvironment.cpp
+    include/v8pp-lab/environment.hpp
+    include/v8pp-lab/concepts.hpp
+    include/v8pp-lab/filelocator.hpp
+    include/v8pp-lab/scripts.hpp
+
+    src/environment.cpp
+    src/filelocator.cpp
+    src/scripts.cpp
 )
 
 target_include_directories(V8ppLab
@@ -30,5 +32,5 @@ target_include_directories(V8ppLab
 
 target_link_libraries(V8ppLab
     PUBLIC
-    JSProvider)
+    v8pp::v8pp)
 

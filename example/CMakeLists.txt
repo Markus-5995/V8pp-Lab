@@ -6,7 +6,6 @@ add_executable(Example
 
 target_link_libraries(Example
     PUBLIC
-    V8ppLab
     CoffeeModule)
 
 target_compile_definitions(Example

@@ -1,14 +1,17 @@
-#include "jsprovider/scripts.hpp"
-namespace JSProvider
+#include "v8pp-lab/scripts.hpp"
+#include <fstream>
+#include <sstream>
+
+namespace V8ppLap
 {
 
-JSProvider::FileScript::FileScript(const std::string &filepath) noexcept :
+FileScript::FileScript(const std::string &filepath) noexcept :
     m_filepath(filepath)
 {
 
 }
 
-std::string JSProvider::FileScript::get()
+std::string FileScript::get()
 {
     std::stringstream ss {};
     std::string line {};
@@ -20,10 +23,10 @@ std::string JSProvider::FileScript::get()
     return ss.str();
 }
 
-std::string JSProvider::FileScript::name() const
+std::string FileScript::name() const
 {
     return m_filepath.filename();
 }
 
 
-} // namespace JSProvider
+}

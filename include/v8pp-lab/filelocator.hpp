@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <vector>
 #include "scripts.hpp"
-namespace JSProvider
+namespace V8ppLap
 {
 
 class FileLocator final
@@ -14,4 +14,4 @@ private:
     std::filesystem::directory_iterator m_directoryIt {};
 };
 
-} // namespace JSProvider
+}

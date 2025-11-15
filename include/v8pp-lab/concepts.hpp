@@ -1,8 +1,16 @@
 #pragma once
 #include "v8pp/module.hpp"
 #include "concepts"
-namespace AppConcepts
+namespace V8ppLap
 {
+
+template<typename T>
+concept JSScript = requires(T t)
+{
+    {t.get()} -> std::convertible_to<std::string_view>;
+    {t.name()} -> std::convertible_to<std::string_view>;
+};
+
 template<typename T>
 concept CppModule = requires(T t,
                              v8::Isolate* isolate)
