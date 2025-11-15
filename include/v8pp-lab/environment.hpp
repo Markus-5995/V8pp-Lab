@@ -2,10 +2,10 @@
 #include "v8pp/module.hpp"
 #include "v8pp-lab/concepts.hpp"
 
-namespace V8ppLap
+namespace V8ppLab
 {
 class Context;
-class V8ppEnvironment
+class V8ppEnvironment final
 {
 public:
     V8ppEnvironment();

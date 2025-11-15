@@ -1,7 +1,7 @@
 #pragma once
 #include "v8pp/module.hpp"
 #include "concepts"
-namespace V8ppLap
+namespace V8ppLab
 {
 
 template<typename T>

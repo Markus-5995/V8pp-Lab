@@ -2,7 +2,7 @@
 #include <ranges>
 #include <algorithm>
 
-namespace V8ppLap
+namespace V8ppLab
 {
 
 FileLocator::FileLocator(std::string_view jsDirectory) :

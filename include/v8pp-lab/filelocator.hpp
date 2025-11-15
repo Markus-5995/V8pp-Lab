@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <vector>
 #include "scripts.hpp"
-namespace V8ppLap
+namespace V8ppLab
 {
 
 class FileLocator final

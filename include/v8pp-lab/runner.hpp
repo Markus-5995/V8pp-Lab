@@ -3,10 +3,10 @@
 #include <vector>
 #include <tuple>
 #include <iostream>
-namespace V8ppLap
+namespace V8ppLab
 {
 template <ScriptEnvironment Environment>
-class Runner
+class Runner final
 {
 public:
     template<typename ...Args>

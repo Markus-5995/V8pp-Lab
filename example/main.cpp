@@ -8,7 +8,7 @@
 
 int main(int argc, char* argv[])
 {
-    using namespace V8ppLap;
+    using namespace V8ppLab;
     constexpr InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
 
     std::vector<FileScript> fileBasedScripts {};

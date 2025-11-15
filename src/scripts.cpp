@@ -2,7 +2,7 @@
 #include <fstream>
 #include <sstream>
 
-namespace V8ppLap
+namespace V8ppLab
 {
 
 FileScript::FileScript(const std::string &filepath) noexcept :

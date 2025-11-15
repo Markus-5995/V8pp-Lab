@@ -3,11 +3,34 @@
 #include <v8pp/context.hpp>
 #include <v8/libplatform/libplatform.h>
 #include <iostream>
-namespace V8ppLap
+namespace V8ppLab
 {
 
 struct Context
 {
+    static Context* createContext()
+    {
+        static bool v8Initialized {};
+        if (! v8Initialized)
+        {
+            // Initialize V8
+            v8::V8::InitializeICUDefaultLocation(nullptr);
+            v8::V8::InitializeExternalStartupData(nullptr);
+
+            v8::Platform* platform = v8::platform::NewDefaultPlatform().release();
+            v8::V8::InitializePlatform(platform);
+            v8::V8::Initialize();
+            v8Initialized = true;
+        }
+        return new Context();
+    }
+
+    v8pp::context context;
+    v8::Isolate* isolate;
+    v8::HandleScope scope;
+    v8::Local<v8::Context> ctx;
+
+private:
     Context() :
         context(),
         isolate(context.isolate()),
@@ -15,23 +38,13 @@ struct Context
         ctx(context.impl())
     {
     }
-
-    v8pp::context context;
-    v8::Isolate* isolate;
-    v8::HandleScope scope;
-    v8::Local<v8::Context> ctx;
 };
 
-V8ppEnvironment::V8ppEnvironment()
-{
-    // Initialize V8
-    v8::V8::InitializeICUDefaultLocation(nullptr);
-    v8::V8::InitializeExternalStartupData(nullptr);
 
-    v8::Platform* platform = v8::platform::NewDefaultPlatform().release();
-    v8::V8::InitializePlatform(platform);
-    v8::V8::Initialize();
-    m_context = std::make_unique<Context>();
+V8ppEnvironment::V8ppEnvironment() :
+    m_context(Context::createContext())
+{
+
 }
 
 V8ppEnvironment::~V8ppEnvironment() = default;

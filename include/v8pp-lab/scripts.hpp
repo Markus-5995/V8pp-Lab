@@ -2,10 +2,10 @@
 #include <filesystem>
 #include "v8pp-lab/concepts.hpp"
 
-namespace V8ppLap
+namespace V8ppLab
 {
 
-class InMemoryScript
+class InMemoryScript final
 {
 public:
     explicit constexpr InMemoryScript(std::string_view script) noexcept
@@ -33,7 +33,7 @@ private:
     std::string_view m_name {"In Memory Script"};
 };
 
-class FileScript
+class FileScript final
 {
 public:
     FileScript(const std::string& filepath) noexcept;
