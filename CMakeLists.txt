@@ -14,23 +14,19 @@ if(BUILD_EXAMPLE)
 endif()
 
 
-add_library(V8ppLab SHARED
+add_library(V8ppLab INTERFACE
     include/v8pp-lab/runner.hpp
     include/v8pp-lab/environment.hpp
     include/v8pp-lab/concepts.hpp
     include/v8pp-lab/filelocator.hpp
-    include/v8pp-lab/scripts.hpp
+    include/v8pp-lab/scripts.hpp)
 
-    src/environment.cpp
-    src/filelocator.cpp
-    src/scripts.cpp
-)
 
 target_include_directories(V8ppLab
-    PUBLIC
+    INTERFACE
     include)
 
 target_link_libraries(V8ppLab
-    PUBLIC
+    INTERFACE
     v8pp::v8pp)
 

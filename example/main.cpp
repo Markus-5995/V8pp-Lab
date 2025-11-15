@@ -9,7 +9,12 @@
 int main(int argc, char* argv[])
 {
     using namespace V8ppLab;
-    constexpr InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
+    InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
+    memoryScript.process = [](v8::Local<v8::Value> result, v8::Isolate* isolate)
+    {
+        v8::String::Utf8Value utf8(isolate, result);
+        std::cout << "Hi Im customized!" << std::endl << *utf8 << std::endl;
+    };
 
     std::vector<FileScript> fileBasedScripts {};
     if (argc == 2)

@@ -1,14 +1,19 @@
 #pragma once
 #include "v8pp/module.hpp"
+#include "v8-data.h"
 #include "concepts"
 namespace V8ppLab
 {
 
 template<typename T>
-concept JSScript = requires(T t)
+concept JSScript = requires(T t,
+                            v8::Local<v8::Value> result,
+                            v8::Isolate* isolate)
 {
     {t.get()} -> std::convertible_to<std::string_view>;
     {t.name()} -> std::convertible_to<std::string_view>;
+    t.process(result, isolate);
+
 };
 
 template<typename T>
@@ -19,17 +24,12 @@ concept CppModule = requires(T t,
     { t.name() } -> std::convertible_to<std::string_view>;
 };
 
-
-template<typename T>
-concept ScriptEnvironment = requires(T t,
-                                     std::string_view script,
-                                     std::string_view name,
-                                     v8pp::module module)
+template<typename Environment>
+concept ScriptEnvironment =
+    requires(Environment env)
 {
-
-    { t.getContext() } -> std::same_as<v8::Isolate*>;
-    t.addModule(name, std::move(module));
-    t.runScript(script);
+    &Environment::template addModule<CppModule auto>;
+    &Environment::template runScript<JSScript auto>;
 };
 
 }

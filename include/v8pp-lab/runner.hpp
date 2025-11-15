@@ -38,7 +38,7 @@ private:
     void forEach(std::vector<Script>& vec) {
         for (auto& s : vec) {
             std::cout << "Running script... " << s.name() << std::endl;
-            m_environment.runScript(s.get());
+            m_environment.runScript(s);
         }
     }
 
@@ -46,7 +46,7 @@ private:
     void forEach(std::vector<Modules>& vec) {
         for (auto& s : vec) {
             std::cout << "Loading module..." << s.name() << std::endl;
-            m_environment.addModule(s.name(), s.generateModule(m_environment.getContext()));
+            m_environment.addModule(s);
         }
     }
     Environment m_environment {};
