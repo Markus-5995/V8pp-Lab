@@ -5,19 +5,19 @@
 #include <iostream>
 namespace V8ppLab
 {
-template <ScriptEnvironment Environment>
+template <ScriptContext Context>
 class Runner final
 {
 public:
     template<typename ...Args>
     Runner(Args&&...  args) :
-        m_environment(std::forward<Args>(args)...)
+        m_context(Context::createContext(std::forward<Args>(args)...))
     {
 
     }
 
     template<CppModule ...Modules>
-    void loadModules(std::tuple<std::vector<Modules>...>&& modules) {
+    void loadModules(std::tuple<std::vector<Modules>...>& modules) {
         std::apply([this](auto&... vectors) {
             (..., forEach(vectors));
         },
@@ -25,7 +25,7 @@ public:
     }
 
     template<JSScript ...Scripts>
-    int run(std::tuple<std::vector<Scripts>...> scripts) {
+    int run(std::tuple<std::vector<Scripts>...>& scripts) {
         std::apply([this](auto&... vectors) {
             (..., forEach(vectors));
         },
@@ -36,20 +36,23 @@ public:
 private:
     template <JSScript Script>
     void forEach(std::vector<Script>& vec) {
-        for (auto& s : vec) {
-            std::cout << "Running script... " << s.name() << std::endl;
-            m_environment.runScript(s);
+        for (auto& script : vec) {
+            std::cout << "Running script... " << script.name() << std::endl;
+            auto result = m_context->context.run_script(script.get());
+            script.process(result, m_context->isolate);
+            std::cout << std::endl;
         }
     }
 
     template <CppModule Modules>
     void forEach(std::vector<Modules>& vec) {
-        for (auto& s : vec) {
-            std::cout << "Loading module..." << s.name() << std::endl;
-            m_environment.addModule(s);
+        for (auto& module : vec) {
+            std::cout << "Loading module..." << module.name() << std::endl;
+            v8pp::module v8Module = module.generateModule(m_context->isolate);
+            m_context->context.module(module.name(), v8Module);
         }
     }
-    Environment m_environment {};
+    std::unique_ptr<Context> m_context {};
 };
 
 }

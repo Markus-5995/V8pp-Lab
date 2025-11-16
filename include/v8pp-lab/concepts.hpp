@@ -1,7 +1,8 @@
 #pragma once
 #include "v8pp/module.hpp"
+#include "v8pp/context.hpp"
 #include "v8-data.h"
-#include "concepts"
+#include <concepts>
 namespace V8ppLab
 {
 
@@ -24,12 +25,12 @@ concept CppModule = requires(T t,
     { t.name() } -> std::convertible_to<std::string_view>;
 };
 
-template<typename Environment>
-concept ScriptEnvironment =
-    requires(Environment env)
+template<typename T>
+concept ScriptContext = requires(T t)
 {
-    &Environment::template addModule<CppModule auto>;
-    &Environment::template runScript<JSScript auto>;
+    { T::createContext() } -> std::same_as<T*>;
+    { t.context } -> std::convertible_to<v8pp::context&>;
+    { t.isolate } -> std::convertible_to<v8::Isolate*>;
 };
 
 }

@@ -4,9 +4,9 @@
 #include "v8pp-lab/scripts.hpp"
 #include "v8pp-lab/filelocator.hpp"
 #include "coffeemodule/coffemodule.hpp"
-#include "v8pp-lab/environment.hpp"
+#include "v8pp-lab/context.hpp"
 
-int main(int argc, char* argv[])
+int main()
 {
     using namespace V8ppLab;
     InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
@@ -16,21 +16,11 @@ int main(int argc, char* argv[])
         std::cout << "Hi Im customized!" << std::endl << *utf8 << std::endl;
     };
 
-    std::vector<FileScript> fileBasedScripts {};
-    if (argc == 2)
-    {
-        FileLocator locator (argv[1]);
-        fileBasedScripts = locator.getScripts();
-    }
-    else
-    {
-        FileLocator locator (DEFAULT_JS_DIR);
-        fileBasedScripts = locator.getScripts();
-    }
+    FileLocator locator (DEFAULT_JS_DIR);
 
     std::tuple<std::vector<InMemoryScript>, std::vector<FileScript>> scripts{
         std::vector{ memoryScript },
-        fileBasedScripts
+        locator.getScripts()
     };
 
     constexpr CppModule::CoffeeModule coffeeModule {};
@@ -38,10 +28,12 @@ int main(int argc, char* argv[])
         std::vector {coffeeModule}
     };
 
-    Runner<V8ppEnvironment> runner {};
+    Runner<V8Context> runner {};
     std::cout << "-----Loading Modules-----" << std::endl;
-    runner.loadModules(std::move(modules));
+    runner.loadModules(modules);
 
-    std::cout << "-----Running Scripts-----" << std::endl;
-    return runner.run(std::move(scripts));
+    std::cout << std::endl << "-----Running Scripts-----" << std::endl;
+    return runner.run(scripts);
+
+
 }
