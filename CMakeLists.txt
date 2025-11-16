@@ -20,7 +20,6 @@ add_library(V8ppLab INTERFACE
     include/v8pp-lab/filelocator.hpp
     include/v8pp-lab/scripts.hpp)
 
-
 target_include_directories(V8ppLab
     INTERFACE
     include)

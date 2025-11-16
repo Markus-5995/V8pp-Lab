@@ -33,7 +33,7 @@ int main()
     runner.loadModules(modules);
 
     std::cout << std::endl << "-----Running Scripts-----" << std::endl;
-    return runner.run(scripts);
-
+    runner.run(scripts);
+    return 0;
 
 }

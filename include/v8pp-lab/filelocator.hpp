@@ -7,14 +7,28 @@
 namespace V8ppLab
 {
 
+//!
+//! \brief This class allows to locate all js files within
+//!        a specified directory.
+//!
 class FileLocator final
 {
 public:
+    //!
+    //! \brief Constructor
+    //! \param jsDirectory: Directory that is to be searched
+    //!        for js files.
+    //!
     explicit FileLocator(std::string_view jsDirectory) :
         m_directoryIt(jsDirectory)
     {
 
     }
+
+    //!
+    //! \brief Generates FileScript instances based on the content of the
+    //!        directory.
+    //!
     std::vector<FileScript> getScripts() const
     {
         std::vector<FileScript> vector {};

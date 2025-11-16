@@ -6,6 +6,10 @@
 namespace V8ppLab
 {
 
+//!
+//! \brief This concept describes how js scripts are
+//!        supposed to look like.
+//!
 template<typename T>
 concept JSScript = requires(T t,
                             v8::Local<v8::Value> result,
@@ -17,6 +21,10 @@ concept JSScript = requires(T t,
 
 };
 
+//!
+//! \brief This concept describes how cpp modules are
+//!        supposed to look like.
+//!
 template<typename T>
 concept CppModule = requires(T t,
                              v8::Isolate* isolate)
@@ -25,6 +33,11 @@ concept CppModule = requires(T t,
     { t.name() } -> std::convertible_to<std::string_view>;
 };
 
+
+//!
+//! \brief This concpet describes how a script context is
+//!        supposed to look like.
+//!
 template<typename T>
 concept ScriptContext = requires(T t)
 {

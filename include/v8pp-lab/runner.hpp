@@ -5,10 +5,25 @@
 #include <iostream>
 namespace V8ppLab
 {
+
+//!
+//! \brief This class is used to run JS scripts.
+//!        It allows to expose CppModules via V8pp to those
+//!        scripts.
+//! \tparam Context: V8Context adhering to the ScriptContext concept.
+//!        This type will create the v8 context under which the scripts
+//!        will be executed.
+//! \details This class leverages templates/concepts rather than inhertance
+//!        as an abstraction mechanism.
+//!
 template <ScriptContext Context>
 class Runner final
 {
 public:
+    //!
+    //! \brief Creates a runner, instantiates V8 via Context::createContext.
+    //! \param args: Constructor arguments for the Context type.
+    //!
     template<typename ...Args>
     Runner(Args&&...  args) :
         m_context(Context::createContext(std::forward<Args>(args)...))
@@ -16,6 +31,11 @@ public:
 
     }
 
+    //!
+    //! \brief Adds modules to context.
+    //! \param modules: List of all cpp modules that shall be added
+    //!        to the context of the Runner class.
+    //!
     template<CppModule ...Modules>
     void loadModules(std::tuple<std::vector<Modules>...>& modules) {
         std::apply([this](auto&... vectors) {
@@ -24,8 +44,13 @@ public:
                    modules);
     }
 
+    //!
+    //! \brief Runs a list of provided scripts within the Runner's
+    //!        context.
+    //! \param scripts: Scripts that are to be executed.
+    //!
     template<JSScript ...Scripts>
-    int run(std::tuple<std::vector<Scripts>...>& scripts) {
+    void run(std::tuple<std::vector<Scripts>...>& scripts) {
         std::apply([this](auto&... vectors) {
             (..., forEach(vectors));
         },
