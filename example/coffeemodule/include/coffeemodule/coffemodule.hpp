@@ -1,9 +1,9 @@
 #pragma once
-#include "appconcepts/cppmodule.hpp"
+#include "v8pp-lab/concepts.hpp"
 
 namespace CppModule
 {
-class CoffeeModule
+class CoffeeModule final
 {
 public:
     v8pp::module generateModule(v8::Isolate* isolate) const
@@ -18,5 +18,5 @@ public:
     }
 };
 
-static_assert(AppConcepts::CppModule<CoffeeModule>, "Must adhere to CppModule concept!");
+static_assert(V8ppLab::CppModule<CoffeeModule>, "Must adhere to CppModule concept!");
 }
