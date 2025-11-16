@@ -128,7 +128,7 @@ public:
         std::ifstream stream (m_filepath);
         while(std::getline(stream, line))
         {
-            ss << line;
+            ss << line << std::endl;
         }
         return ss.str();
     }
