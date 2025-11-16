@@ -43,9 +43,20 @@ With this, instantiate the Runner. This will then run your js scripts with your 
         std::vector {CppModule::CoffeeModule()}
     };
 
-    Runner<V8ppEnvironment> runner {};
+    Runner<V8Context> runner {};
     runner.loadModules(std::move(modules));
     runner.run(std::move(scripts));
+```
+
+## Customize Script Processing
+The classes *InMemoryScript* and *FileScript* have a default processing handling in place. However, it is possible to override this by setting the process *std::function*
+```cpp
+    InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
+    memoryScript.process = [](v8::Local<v8::Value> result, v8::Isolate* isolate)
+    {
+        v8::String::Utf8Value utf8(isolate, result);
+        std::cout << "Hi Im customized!" << std::endl << *utf8 << std::endl;
+    };
 ```
 
 Please view the *example* directory for more details.
@@ -64,7 +75,7 @@ The following block diagram describes the component that are involved.
        subgraph C[Concepts]
         JC[JSFileConcept]
         CC[CppModuleConcept]
-        EC[EnvironmentConcept]
+        EC[ScriptContextConcept]
         end
 
        subgraph Functional
@@ -92,4 +103,4 @@ The following block diagram describes the component that are involved.
 | JSLocator  | This is a utility that allows to locate all js files in a provided directory and generate a list of objects that adhere to the JSFileConcept.  |
 | JSFileConcept  | Concept that defines the interface for a JS File in the form of a cpp class. |
 | CppModuleConcept  | Concept that defines the interface for a Cpp Module (v8pp) in the form of a cpp class. |
-| EnvironmentConcept  | Concept that defines the interface of a JS environment used by the Runner.  |
+| ScriptContextConcept  | Concept that defines the interface of a JS environment used by the Runner.  |
