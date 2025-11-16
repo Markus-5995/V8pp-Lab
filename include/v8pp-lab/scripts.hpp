@@ -70,7 +70,8 @@ public:
     //! \param script: JS code that is supposed to be executed.
     //!
     explicit InMemoryScript(std::string&& script) noexcept
-        : m_script(std::move(script))
+        : BaseScript("MemoryScript"),
+        m_script(std::move(script))
     {
 
     }
@@ -82,9 +83,9 @@ public:
     //!        execution of the script only how it is displayed in the console
     //!        output.
     //!
-    InMemoryScript(std::string&& script, std::string&& script) noexcept
-        : m_script(std::move(script)),
-        m_name(std::move(name))
+    InMemoryScript(std::string&& script, std::string&& name) noexcept
+        : BaseScript(std::move(name)),
+        m_script(std::move(script))
     {
 
     }

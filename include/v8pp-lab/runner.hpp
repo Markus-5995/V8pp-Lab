@@ -55,7 +55,7 @@ public:
             (..., forEach(vectors));
         },
                    scripts);
-        return 0;
+        return;
     }
 
 private:
