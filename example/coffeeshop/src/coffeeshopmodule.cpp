@@ -20,7 +20,6 @@ v8pp::module CppModule::generateModule(v8::Isolate *isolate) const
         .function("run", &Simulation::run)
         .function("runtime", &Simulation::runtime);
 
-
     v8pp::module module (isolate);
     module.class_("Mug", mugClass);
     module.class_("Machine", machineClass);

@@ -1,5 +1,6 @@
 #pragma once
 #include "coffeemachine.hpp"
+#include "v8pp/call_v8.hpp"
 namespace CoffeeShop
 {
 class Simulation
@@ -10,14 +11,15 @@ public:
     {
 
     }
-    void run()
+    void run(v8::Local<v8::Function> function)
     {
         if (m_machine == nullptr)
         {
             return;
         }
-        bool exitCondition {};
-        while (! exitCondition)
+
+        auto* currentIsolate = v8::Isolate::GetCurrent();
+        while (! endConditionMet(function, currentIsolate))
         {
             for(Mug* mug : m_machine->mugs)
             {
@@ -27,7 +29,6 @@ public:
                 }
                 mug->fillStand += 10;
                 mug->temperature += 5;
-                exitCondition = mug->full();
             }
             m_runtime++;
         }
@@ -38,6 +39,20 @@ public:
     }
 
 private:
+    bool endConditionMet(v8::Local<v8::Function>& function, v8::Isolate* isolate)
+    {
+        auto context = isolate->GetCurrentContext();
+        v8::Local<v8::Value> recv = context->Global();
+
+        v8::Local<v8::Value> result = v8pp::call_v8(isolate, function, recv);
+        if (! result.IsEmpty())
+        {
+            return v8pp::from_v8<bool>(isolate, result);
+        }
+        return true;
+    }
+
+
     int m_runtime {};
     CoffeeMachine* m_machine;
 };
