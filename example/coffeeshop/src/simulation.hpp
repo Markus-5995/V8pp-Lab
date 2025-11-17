@@ -21,15 +21,7 @@ public:
         auto* currentIsolate = v8::Isolate::GetCurrent();
         while (! endConditionMet(function, currentIsolate))
         {
-            for(Mug* mug : m_machine->mugs)
-            {
-                if (mug == nullptr)
-                {
-                    continue;
-                }
-                mug->fillStand += 10;
-                mug->temperature += 5;
-            }
+            m_machine->act();
             m_runtime++;
         }
     }
