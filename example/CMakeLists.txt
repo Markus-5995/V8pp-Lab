@@ -1,4 +1,4 @@
-add_subdirectory(coffeemodule)
+add_subdirectory(coffeeshop)
 add_subdirectory(jstestfiles)
 
 option(ENABLE_SANITIZERS "Enables ASAN for example." ON)
@@ -8,7 +8,7 @@ add_executable(Example
 
 target_link_libraries(Example
     PUBLIC
-    CoffeeModule)
+    CoffeeShop)
 
 target_compile_definitions(Example
     PRIVATE

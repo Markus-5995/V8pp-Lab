@@ -3,13 +3,13 @@
 #include "v8pp-lab/runner.hpp"
 #include "v8pp-lab/scripts.hpp"
 #include "v8pp-lab/filelocator.hpp"
-#include "coffeemodule/coffemodule.hpp"
+#include "coffeeshop/coffeeshopmodule.hpp"
 #include "v8pp-lab/context.hpp"
 
 int main()
 {
     using namespace V8ppLab;
-    InMemoryScript memoryScript (R"a("Hello JS " + Coffee.MagicTemperature;)a");
+    InMemoryScript memoryScript (R"a("Hello From JS")a");
     memoryScript.process = [](v8::Local<v8::Value> result, v8::Isolate* isolate)
     {
         v8::String::Utf8Value utf8(isolate, result);
@@ -23,8 +23,8 @@ int main()
         locator.getScripts()
     };
 
-    constexpr CppModule::CoffeeModule coffeeModule {};
-    std::tuple<std::vector<CppModule::CoffeeModule>> modules{
+    constexpr CoffeeShop::CppModule coffeeModule {};
+    std::tuple<std::vector<CoffeeShop::CppModule>> modules{
         std::vector {coffeeModule}
     };
 
