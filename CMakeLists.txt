@@ -4,7 +4,7 @@ project(V8ppLab CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-option(BUILD_EXAMPLE "Builds the example exectuable" ON)
+option(BUILD_EXAMPLE "Builds the example exectuable" OFF)
 
 find_package(v8pp REQUIRED)
 find_package(V8 REQUIRED)
